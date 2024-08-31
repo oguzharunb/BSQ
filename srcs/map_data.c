@@ -6,12 +6,13 @@
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 10:54:23 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 15:36:09 by obastug          ###   ########.fr       */
+/*   Updated: 2024/08/31 16:25:45 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bsq.h"
 
+//this file is for getting data of the file like chars, size, line number
 int	ft_get_l_number(char *file_name)
 {
 	char	buf[80];
@@ -69,7 +70,7 @@ char	ft_get_void(char *file_name)
 	return (buf[i - 3]);
 }
 
-char	ft_get_filler(char *file_name)
+char	ft_get_full(char *file_name)
 {
 	char	buf[80];
 	int		i;

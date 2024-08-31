@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftlib.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 16:08:22 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 16:11:48 by obastug          ###   ########.fr       */
+/*   Created: 2024/08/31 11:12:28 by obastug           #+#    #+#             */
+/*   Updated: 2024/08/31 15:39:37 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bsq.h"
 
-int	ft_size_file(char *file_name)
+#include <stdio.h>
+int main(void)
 {
-    int size;
-    char buf;
-    int fd;
-
-    size = 0;
-    fd = open(file_name, O_RDONLY);
-    while (read(fd, &buf, 1))
-        size++;
-    close(fd);
-    return (size);
+	printf("%d", ft_get_l_number("mapfalse"));
+	return 0;
 }

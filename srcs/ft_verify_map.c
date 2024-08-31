@@ -1,10 +1,10 @@
 /*
--> new line kontrolü
-	başta gösterilen yönerge kadar satır var mı?
-	harita bir dörtgen şeklinde mi?
--> karakter kontrolü
-	-> karakterler başta gösterildiği gibi mi, yoksa başka karakter var mı?
--> harita var mı?
+-> new line check
+	does line_number data and number of lines in file match?
+	is the map rectengular
+-> char check
+	-> are there any other characters on the map rather than the ones the referred at first
+-> does a map exists?
 
 karakter sayısı // i
 new line sayacı // baştakine eşit değilse map error
@@ -14,34 +14,17 @@ satırdaki karakter sayacı // biri öncekine eşit değilse map error
 
 #include "../includes/bsq.h"
 
-//10.ox
-t_map_data	get_map_data(char *map)
+//this file exists because we want to deal with a valid map.
+int	ft_verify_chars(char *file_name)
 {
-	int	i;
-	int line;
-	int	obst;
-	int	emty;
-	int sqrx;
-	i = -1;
-	while (map[++i] && map[i] <= '9' && map[i] >= '0')
-		line = (line * 10) + (map[i] - '0');
-	t_map_data map_data = {map[i], map[i + 1], map[i + 2], line};
-	return (map_data);
-}
+	t_map_data map_data;
+	int	fd;
 
-int main(int argc, char const *argv[])
-{
-	
-	return 0;
-}
-
-
-int	ft_verify_map(char *map)
-{
-	int	i;
-	int	new_line;
-	int	char_in_line;
-
-	i = 0;
+	map_data.file_size = ft_size_file(file_name);
+	map_data.empty = ft_get_void(file_name);
+	map_data.full = ft_get_full(file_name);
+	map_data.obst = ft_get_obstacle(file_name);
+	map_data.line = ft_get_l_number(file_name);
+	fd = open(file_name, O_RDONLY);
 
 }
