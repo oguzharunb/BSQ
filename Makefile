@@ -2,14 +2,20 @@ NAME = bsq
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = #-Wall -Wextra -Werror
 
-SRC = map_data.c main.c ftlib.c ft_verify_map.c
+SRC = map_data.c main.c ftlib.c ft_verify_map.c ft_string.c
+
+SRCS = $(addprefix $(PRE), $(SRC))
+
+PRE = ./srcs/
+
+INCS = ./includes/
 
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) -o $(NAME) $(SRC)
+	$(CC) $(CFLAGS) -o $(NAME) $(SRCS) -I $(INCS)
 clean:
 	/bin/rm -f *.o
 
