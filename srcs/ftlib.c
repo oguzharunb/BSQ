@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ftlib.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 16:08:22 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 17:29:24 by obastug          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/bsq.h"
 
 int	ft_size_file(char *file_name)
@@ -26,7 +14,7 @@ int	ft_size_file(char *file_name)
 	return (size);
 }
 
-void	ft_cursor_to_next_line(int fd)
+int	ft_cursor_to_next_line(int fd)
 {
 	int		i;
 	char	*buf;
@@ -38,7 +26,11 @@ void	ft_cursor_to_next_line(int fd)
 	while (read(fd, &buf[i], 1))
 	{
 		if (buf[i] == '\n')
+		{
+			free(buf);
 			break ;
+		}
 		i++;
 	}
+	return (i);
 }

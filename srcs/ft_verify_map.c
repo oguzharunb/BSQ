@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_verify_map.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 17:06:48 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 20:23:50 by obastug          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /*
 -> new line check
 	does line_number data and number of lines in file match?
@@ -56,4 +44,26 @@ int	ft_verify_chars(char *file_name)
 	close(fd);
 	free(buf);
 	return (0);
+}
+
+//this function checks if number of columns fits
+int	ft_get_next_columns(char *argv, int fd)
+{
+	char	*buf;
+	int		j;
+	int		size_file;
+
+	j = 0;
+	size_file = ft_size_file(argv);
+	buf = malloc(size_file * sizeof(char));
+	if (buf == NULL)
+		return (0);
+	while (read(fd, &buf[j], 1))
+	{
+		if (buf[j] == '\n')
+			break ;
+		j++;
+	}
+	free (buf);
+	return (j + 1);
 }
