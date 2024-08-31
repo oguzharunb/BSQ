@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 10:54:23 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 11:06:30 by obastug          ###   ########.fr       */
+/*   Updated: 2024/08/31 15:36:09 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_get_l_number(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	while (read(fd, buf + i, 1))
 	{
-		if (buf[i] < '0' && buf[i] > '9')
+		if (buf[i] < '0' || buf[i] > '9')
 			break;
 		result = (result * 10) + (buf[i] - '0');
 		i++;
