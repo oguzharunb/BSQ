@@ -1,6 +1,5 @@
 #include "../includes/bsq.h"
 
-
 char	ft_get_obstacle(char *file_name)
 {
 	char	buf[80];
