@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bsq.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/31 17:29:50 by obastug           #+#    #+#             */
+/*   Updated: 2024/08/31 17:29:57 by obastug          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BSQ_H
 # define BSQ_H
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
+
 int		ft_strlen(char *str);
+void	ft_cursor_to_next_line(int fd);
 void	ft_putstr(char *str);
 int		ft_size_file(char *file_name);
 int		ft_get_l_number(char *file_name);
@@ -17,6 +31,5 @@ typedef struct s_map_data
 	char	full;
 	int		file_size;
 	int		line;
-} t_map_data;
+}	t_map_data;
 #endif
-

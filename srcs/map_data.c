@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 10:54:23 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 16:25:45 by obastug          ###   ########.fr       */
+/*   Updated: 2024/08/31 17:23:24 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_get_l_number(char *file_name)
 	while (read(fd, buf + i, 1))
 	{
 		if (buf[i] < '0' || buf[i] > '9')
-			break;
+			break ;
 		result = (result * 10) + (buf[i] - '0');
 		i++;
 	}
@@ -44,8 +44,8 @@ char	ft_get_obstacle(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	while (read(fd, buf + i, 1))
 	{
-		if(buf[i] == '\n')
-			break;
+		if (buf[i] == '\n')
+			break ;
 		i++;
 	}
 	close(fd);
@@ -62,8 +62,8 @@ char	ft_get_void(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	while (read(fd, buf + i, 1))
 	{
-		if(buf[i] == '\n')
-			break;
+		if (buf[i] == '\n')
+			break ;
 		i++;
 	}
 	close(fd);
@@ -80,8 +80,8 @@ char	ft_get_full(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	while (read(fd, buf + i, 1))
 	{
-		if(buf[i] == '\n')
-			break;
+		if (buf[i] == '\n')
+			break ;
 		i++;
 	}
 	close(fd);
