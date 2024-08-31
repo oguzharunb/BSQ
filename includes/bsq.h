@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:29:50 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 17:29:57 by obastug          ###   ########.fr       */
+/*   Updated: 2024/08/31 20:51:00 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 
 int		ft_strlen(char *str);
+int		ft_get_to_next_l(int fd);
 void	ft_cursor_to_next_line(int fd);
 void	ft_putstr(char *str);
 int		ft_size_file(char *file_name);
