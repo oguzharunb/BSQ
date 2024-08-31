@@ -6,7 +6,7 @@
 /*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:29:50 by obastug           #+#    #+#             */
-/*   Updated: 2024/08/31 20:51:00 by obastug          ###   ########.fr       */
+/*   Updated: 2024/08/31 21:20:16 by obastug          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int		ft_strlen(char *str);
 int		ft_get_to_next_l(int fd);
-void	ft_cursor_to_next_line(int fd);
+int		ft_cursor_to_next_line(int fd);
 void	ft_putstr(char *str);
 int		ft_size_file(char *file_name);
 int		ft_get_l_number(char *file_name);
