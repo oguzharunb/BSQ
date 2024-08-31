@@ -22,6 +22,7 @@ void	ft_cursor_to_next_line(int fd);
 void	ft_putstr(char *str);
 int		ft_size_file(char *file_name);
 int		ft_get_l_number(char *file_name);
+int		ft_get_c_number(char *file_name);
 char	ft_get_obstacle(char *file_name);
 char	ft_get_void(char *file_name);
 char	ft_get_full(char *file_name);
