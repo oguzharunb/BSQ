@@ -62,4 +62,45 @@ int	ft_get_c_number(char *file_name)
 	return (j + 1);
 }
 
+char	**ft_create_map(char **buff, int row, int col)
+{
+	int	i;
 
+	buff = malloc(row * sizeof(char *));
+	if (!buff)
+		return (NULL);
+	i = 0;
+	while (i < row)
+	{
+		buff[i] = malloc(col * sizeof(char));
+		if (!buff[i])
+			return (NULL);
+		i++;
+	}
+	return (buff);
+}
+
+char	**ft_read_map(char *file_name)
+{
+	char	**buff;
+	int		i;
+	int		file;
+	int		col;
+	int		row;
+
+	i = 0;
+	row = ft_get_l_number(file_name);
+	col = ft_get_c_number(file_name);
+	file = open(file_name, O_RDONLY);
+	ft_cursor_to_next_line(file);
+	buff = ft_create_map(buff, row, col);
+	while (i < row)
+	{
+		if (read(file, buff[i], col) == -1)
+			return (NULL);
+		buff[i][col - 1] = '\0';
+		i++;
+	}
+	close (file);
+	return (buff);
+}

@@ -13,6 +13,7 @@
 # define ERR_COL_N 64
 # define ERR_LINE_N 128
 # define ERR_NO_FILE 256
+# define ERR_READ 512
 
 int		ft_strlen(char *str);
 int		ft_get_to_next_l(int fd);
@@ -28,6 +29,8 @@ char	ft_get_full(char *file_name);
 int		ft_verify_returns(char *file_name);
 int		ft_verify_columns(char *argv);
 int		ft_verify_map(char *argv);
+char	**ft_create_map(char **buff, int row, int col);
+char	**ft_read_map(char *argv);
 
 typedef struct s_map_data
 {
