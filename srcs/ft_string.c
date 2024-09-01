@@ -10,6 +10,20 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
 char	*ft_strdup(char *str)
 {
 	int		i;
@@ -20,7 +34,7 @@ char	*ft_strdup(char *str)
 	len = ft_strlen(str);
 	newstr = malloc(sizeof(char) * (len + 1));
 	if (!newstr)
-		return (ERR_MEMORY);
+		return (NULL);
 	ft_strcpy(newstr, str);
 	return (newstr);
 }
@@ -39,22 +53,6 @@ int	ft_str_is_lowercase(char *str)
 		i++;
 	}
 	return (1);
-}	
-
-int	ft_str_is_printable(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (!(str[i] >= 32 && str [i] <= 126))
-		{
-			return (0);
-		}
-		i++;
-	}
-	return (1);
 }
 
 void	ft_putstr(char *str)
@@ -67,18 +65,4 @@ void	ft_putstr(char *str)
 		write(1, &str[i], 1);
 		i++;
 	}
-}
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
