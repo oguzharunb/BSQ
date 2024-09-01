@@ -56,14 +56,14 @@ int	ft_verify_columns(char *argv)
 
 	i = 0;
 	j = 0;
-	col = ft_get_l_number(argv);
-	line = ft_get_c_number(argv);
+	line = ft_get_l_number(argv);
+	col = ft_get_c_number(argv);
 	fd = open(argv, O_RDONLY);
 	ft_cursor_to_next_line(fd);
 	while (i < line)
 	{
 		j = ft_get_next_columns(fd);
-		if (j != col + 1)
+		if (j != col)
 			return (ERR_MAP);
 		i++;
 	}
@@ -71,7 +71,32 @@ int	ft_verify_columns(char *argv)
 	return (SUCCESS);
 }
 
-int	ft_verify_returns(char *argv)
+int	ft_verify_lines(char *file_name)
+{
+	char	*buf;
+	int		i;
+	int		fd;
+	int		line;
+	int		size;
+
+	size = ft_size_file(file_name);
+	line = ft_get_l_number(file_name) + 1;
+	i = 0;
+	buf = malloc(size * sizeof(char));
+	fd = open(file_name, O_RDONLY);
+	read(fd, buf, size);
+	while (buf[i])
+	{
+		if (buf[i] == '\n')
+			line--;
+		i++;
+	}
+	if (line)
+		return (ERR_MAP);
+	return (SUCCESS);
+}
+
+int	ft_verify_returns(char *file_name)
 {
 	char	*buf;
 	int		i;
@@ -81,10 +106,10 @@ int	ft_verify_returns(char *argv)
 
 	i = 0;
 	ret = 0;
-	col = ft_get_c_number(argv);
-	fd = open(argv, O_RDONLY);
+	col = ft_get_c_number(file_name);
+	fd = open(file_name, O_RDONLY);
 	ft_cursor_to_next_line(fd);
-	buf = malloc(ft_size_file(argv) * sizeof(char));
+	buf = malloc(ft_size_file(file_name) * sizeof(char));
 	if (buf == NULL)
 		return (ERR_MEMORY);
 	while (1)
@@ -100,35 +125,22 @@ int	ft_verify_returns(char *argv)
 	return (SUCCESS);
 }
 
-/*int	ft_verify_first_line(char *file_name)
-{
-	char	*buf;
-	int		fd;
-	int		i;
-
-	buf = malloc(4096 * sizeof(char));
-	fd = open(file_name, O_RDONLY);
-	i = 0;
-	while (read(fd, buf + i, 1))
-	{
-
-	}
-}*/
-
-int	ft_verify_map(char *argv)
+int	ft_verify_map(char *file_name)
 {
 	int	total_error;
 
 	total_error = SUCCESS;
-	if (ft_get_c_number(argv) < 1)
+	if (ft_get_c_number(file_name) < 1)
 		total_error += ERR_COL_N;
-	if (ft_get_l_number(argv) < 1)
+	if (ft_verify_lines(file_name))
+		total_error += ERR_LINE;
+	if (ft_get_l_number(file_name) < 1)
 		total_error += ERR_LINE_N;
-	if (ft_verify_chars(argv))
+	if (ft_verify_chars(file_name))
 		total_error += ERR_CHARS;
-	if (ft_verify_returns(argv))
+	if (ft_verify_returns(file_name))
 		total_error += ERR_RET;
-	if (ft_verify_columns(argv))
+	if (ft_verify_columns(file_name))
 		total_error += ERR_COL;
 	return (total_error);
 }

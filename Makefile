@@ -2,7 +2,7 @@ NAME = bsq
 
 CC = cc
 
-CFLAGS = #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = map_data.c main.c ftlib.c ft_verify_map.c ft_string.c ft_read_map.c
 
