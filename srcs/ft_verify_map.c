@@ -71,29 +71,27 @@ int	ft_verify_columns(char *argv)
 	return (SUCCESS);
 }
 
-int         ft_verify_returns(char *argv)
+int         ft_verif_columns(char *argv)
 {
-    char *buf;
     int i;
     int fd;
-    int size_file;
-    int ret;
+    int j;
     int c;
+    int l;
 
     i = 0;
-    ret = 0;
-    c = ft_get_c_number(argv);
-    size_file = ft_size_file(argv);
+    j = 0;
+    c = ft_get_number_columns(argv);
+    l = ft_get_number_lines(argv);
     fd = open(argv, O_RDONLY);
-    ft_cursor_to_next_line(fd);
-    if ((buf = malloc(size_file * sizeof(char))) == NULL)
-        return (0);
-    while ((ret = read(fd, buf, c)))
+    ft_get_second_line(fd);
+    while (i < l)
     {
-        if (buf[ret - 1] != '\n')
+        j = ft_get_next_columns(fd);
+        if (j != c)
             return (1);
+        i++;
     }
-    free(buf);
     close(fd);
     return (0);
 }
