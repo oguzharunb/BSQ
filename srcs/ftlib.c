@@ -13,7 +13,10 @@ void	ft_cursor_to_next_line(int fd)
 	while (read(fd, &buf[i], 1))
 	{
 		if (buf[i] == '\n')
+		{
+			free(buf);
 			break ;
+		}
 		i++;
 	}
 }

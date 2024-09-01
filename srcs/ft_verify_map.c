@@ -71,29 +71,33 @@ int	ft_verify_columns(char *argv)
 	return (SUCCESS);
 }
 
-int         ft_verif_columns(char *argv)
+int	ft_verify_returns(char *argv)
 {
-    int i;
-    int fd;
-    int j;
-    int c;
-    int l;
+	char	*buf;
+	int		i;
+	int		fd;
+	int		ret;
+	int		col;
 
-    i = 0;
-    j = 0;
-    c = ft_get_number_columns(argv);
-    l = ft_get_number_lines(argv);
-    fd = open(argv, O_RDONLY);
-    ft_get_second_line(fd);
-    while (i < l)
-    {
-        j = ft_get_next_columns(fd);
-        if (j != c)
-            return (1);
-        i++;
-    }
-    close(fd);
-    return (0);
+	i = 0;
+	ret = 0;
+	col = ft_get_c_number(argv);
+	fd = open(argv, O_RDONLY);
+	ft_cursor_to_next_line(fd);
+	buf = malloc(ft_size_file(argv) * sizeof(char));
+	if (buf == NULL)
+		return (ERR_MEMORY);
+	while (1)
+	{
+		ret = read(fd, buf, col);
+		if (!ret)
+			break ;
+		if (buf[ret - 1] != '\n')
+			return (ERR_MAP);
+	}
+	free(buf);
+	close(fd);
+	return (SUCCESS);
 }
 
 /*int	ft_verify_first_line(char *file_name)
@@ -113,30 +117,18 @@ int         ft_verif_columns(char *argv)
 
 int	ft_verify_map(char *argv)
 {
+	int	total_error;
+
+	total_error = SUCCESS;
 	if (ft_get_c_number(argv) < 1)
-	{
-		ft_putstr("map error\n");
-		return (ERR_COL_N);
-	}
-	else if (ft_get_l_number(argv) < 1)
-	{
-		ft_putstr("map error\n");
-		return (ERR_LINE_N);
-	}
-	else if (ft_verify_chars(argv))
-	{
-		ft_putstr("map error\n");
-		return (ERR_CHARS);
-	}
-	else if (ft_verify_returns(argv))
-	{
-		ft_putstr("map error\n");
-		return (ERR_RET);
-	}
-	else if (ft_verify_columns(argv))
-	{
-		ft_putstr("map error\n");
-		return (ERR_COL);
-	}
-	return (0);
+		total_error += ERR_COL_N;
+	if (ft_get_l_number(argv) < 1)
+		total_error += ERR_LINE_N;
+	if (ft_verify_chars(argv))
+		total_error += ERR_CHARS;
+	if (ft_verify_returns(argv))
+		total_error += ERR_RET;
+	if (ft_verify_columns(argv))
+		total_error += ERR_COL;
+	return (total_error);
 }
