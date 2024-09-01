@@ -10,6 +10,21 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+char	*ft_strdup(char *str)
+{
+	int		i;
+	int		len;
+	char	*newstr;
+
+	i = 0;
+	len = ft_strlen(str);
+	newstr = malloc(sizeof(char) * (len + 1));
+	if (!newstr)
+		return (ERR_MEMORY);
+	ft_strcpy(newstr, str);
+	return (newstr);
+}
+
 void	ft_putstr(char *str)
 {
 	int	i;
