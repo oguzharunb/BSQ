@@ -63,7 +63,7 @@ int	ft_verify_columns(char *argv)
 	while (i < line)
 	{
 		j = ft_get_next_columns(fd);
-		if (j != col)
+		if (j != col + 1)
 			return (ERR_MAP);
 		i++;
 	}
