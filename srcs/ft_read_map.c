@@ -16,9 +16,9 @@ int	ft_size_file(char *file_name)
 }
 
 //this file is for getting data of the file like chars, size, line number
-int	ft_get_l_number(char *file_name)
+int	ft_get_l_number(char *file_name)//bro
 {
-	char	buf[80];
+	char	buf;
 	int		i;
 	int		fd;
 	int		result;
@@ -26,34 +26,38 @@ int	ft_get_l_number(char *file_name)
 	result = 0;
 	i = 0;
 	fd = open(file_name, O_RDONLY);
-	while (read(fd, buf + i, 1))
+	while (read(fd, &buf, 1))
 	{
-		if (buf[i] < '0' || buf[i] > '9')
+		if (buf < '0' || buf > '9')
 			break ;
-		result = (result * 10) + (buf[i] - '0');
+		result = (result * 10) + (buf - '0');
 		i++;
 	}
-	free(buf);
 	close(fd);
 	return (result);
 }
 
 int	ft_get_c_number(char *file_name)
 {
-	char	buf[80];
-	int		i;
+	char	*buf;
+	int		j;
+	int		size_file;
 	int		fd;
-	int		res;
 
-	res = 0;
-	i = 0;
+	j = 0;
 	fd = open(file_name, O_RDONLY);
-	while (read(fd, buf + i, 1))
+	size_file = ft_size_file(file_name);
+	ft_cursor_to_next_line(fd);
+	buf = malloc(size_file * sizeof(char));
+	if (buf == NULL)
+		return (0);
+	while (read(fd, &buf[j], 1))
 	{
-		if (buf[i] == '\n')
+		if (buf[j] == '\n')
 			break ;
-		i++;
+		j++;
 	}
+	free (buf);
 	close(fd);
-	return (res);
+	return (j + 1);
 }

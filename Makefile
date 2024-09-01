@@ -4,7 +4,7 @@ CC = cc
 
 CFLAGS = #-Wall -Wextra -Werror
 
-SRC = map_data.c main.c ftlib.c ft_verify_map.c ft_string.c
+SRC = map_data.c main.c ftlib.c ft_verify_map.c ft_string.c ft_read_map.c
 
 SRCS = $(addprefix $(PRE), $(SRC))
 
@@ -15,7 +15,7 @@ INCS = ./includes/
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLAGS) -o $(NAME) $(SRCS) -I $(INCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -I $(INCS)
 clean:
 	/bin/rm -f *.o
 
