@@ -67,27 +67,27 @@ int	ft_get_next_columns(int fd)
 	return (j + 1);
 }
 
-int         ft_verif_columns(char *argv)
+int	ft_verif_columns(char *argv)
 {
-    int i;
-    int fd;
-    int j;
-    int c;
-    int l;
+	int	i;
+	int	fd;
+	int	j;
+	int	c;
+	int	l;
 
-    i = 0;
-    j = 0;
-    c = ft_get_number_columns(argv);
-    l = ft_get_number_lines(argv);
-    fd = open(argv, O_RDONLY);
-    ft_get_second_line(fd);
-    while (i < l)
-    {
-        j = ft_get_next_columns(fd);
-        if (j != c)
-            return (1);
-        i++;
-    }
-    close(fd);
-    return (0);
+	i = 0;
+	j = 0;
+	c = ft_get_number_columns(argv);
+	l = ft_get_number_lines(argv);
+	fd = open(argv, O_RDONLY);
+	ft_get_second_line(fd);
+	while (i < l)
+	{
+		j = ft_get_next_columns(fd);
+		if (j != c)
+			return (1);
+		i++;
+	}
+	close(fd);
+	return (0);
 }
