@@ -32,62 +32,103 @@ int	ft_verify_chars(char *file_name)
 	ft_cursor_to_next_line(fd);
 	buf = malloc(sizeof(char) * (map_data.file_size));
 	if (!buf)
-		return (NULL);
+		return (ERR_MEMORY);
 	ret = read(fd, buf, map_data.file_size);
 	i = -1;
 	while (buf[++i])
 	{
 		if (buf[i] != map_data.empty && buf[i]
 			!= map_data.obst && buf[i] != '\n')
-			return (1);
+			return (ERR_MAP);
 	}
 	close(fd);
 	free(buf);
-	return (0);
+	return (SUCCESS);
 }
 
-//this function checks if number of columns fits
-int	ft_get_next_columns(int fd)
-{
-	char	*buf;
-	int		j;
-	int		size_file;
-
-	j = 0;
-	buf = malloc((4096) * sizeof(char));
-	if (buf == NULL)
-		return (0);
-	while (read(fd, &buf[j], 1))
-	{
-		if (buf[j] == '\n')
-			break ;
-		j++;
-	}
-	free (buf);
-	return (j + 1);
-}
-
-int	ft_verif_columns(char *argv)
+int	ft_verify_columns(char *argv)
 {
 	int	i;
 	int	fd;
 	int	j;
-	int	c;
-	int	l;
+	int	col;
+	int	line;
 
 	i = 0;
 	j = 0;
-	c = ft_get_number_columns(argv);
-	l = ft_get_number_lines(argv);
+	col = ft_get_l_number(argv);
+	line = ft_get_c_number(argv);
 	fd = open(argv, O_RDONLY);
-	ft_get_second_line(fd);
-	while (i < l)
+	ft_cursor_to_next_line(fd);
+	while (i < line)
 	{
 		j = ft_get_next_columns(fd);
-		if (j != c)
-			return (1);
+		if (j != col)
+			return (ERR_MAP);
 		i++;
 	}
 	close(fd);
-	return (0);
+	return (SUCCESS);
+}
+
+int	ft_verify_returns(char *argv)
+{
+	char	*buf;
+	int		i;
+	int		fd;
+	int		ret;
+	int		col;
+
+	i = 0;
+	ret = 0;
+	col = ft_get_c_number(argv);
+	fd = open(argv, O_RDONLY);
+	ft_cursor_to_next_line(fd);
+	buf = malloc(ft_size_file(argv) * sizeof(char));
+	if (buf == NULL)
+		return (ERR_MEMORY);
+	while (1)
+	{
+		ret = read(fd, buf, col);
+		if (!ret)
+			break ;
+		if (buf[ret - 1] != '\n')
+			return (ERR_MAP);
+	}
+	free(buf);
+	close(fd);
+	return (SUCCESS);
+}
+
+/*int	ft_verify_first_line(char *file_name)
+{
+	char	*buf;
+	int		fd;
+	int		i;
+
+	buf = malloc(4096 * sizeof(char));
+	fd = open(file_name, O_RDONLY);
+	i = 0;
+	while (read(fd, buf + i, 1))
+	{
+
+	}
+}*/
+
+int	ft_verify_map(char *argv)
+{
+	int	total_error;
+
+	total_error = SUCCESS;
+	if (ft_get_c_number(argv) < 1)
+		total_error += ERR_COL_N;
+	if (ft_get_l_number(argv) < 1)
+		total_error += ERR_LINE_N;
+	if (ft_verify_chars(argv))
+		total_error += ERR_CHARS;
+	if (ft_verify_returns(argv))
+		total_error += ERR_RET;
+	if (ft_verify_columns(argv))
+		total_error += ERR_COL;
+	return (total_error);
 }
