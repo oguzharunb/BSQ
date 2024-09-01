@@ -57,3 +57,5 @@ int	ft_get_c_number(char *file_name)
 	close(fd);
 	return (res);
 }
+
+
