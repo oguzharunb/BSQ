@@ -62,9 +62,10 @@ int	ft_get_c_number(char *file_name)
 	return (j + 1);
 }
 
-char	**ft_create_map(char **buff, int row, int col)
+char	**ft_create_map(int row, int col)
 {
-	int	i;
+	int		i;
+	char	**buff;
 
 	buff = malloc(row * sizeof(char *));
 	if (!buff)
@@ -93,7 +94,7 @@ char	**ft_read_map(char *file_name)
 	col = ft_get_c_number(file_name);
 	file = open(file_name, O_RDONLY);
 	ft_cursor_to_next_line(file);
-	buff = ft_create_map(buff, row, col);
+	buff = ft_create_map(row, col);
 	while (i < row)
 	{
 		if (read(file, buff[i], col) == -1)
