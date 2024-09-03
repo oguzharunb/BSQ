@@ -4,13 +4,12 @@
 
 int	main(int argc, char **argv)
 {
-	int i = 1;
-	int ret = 0;
-	while (i < argc)
+	char **map =  ft_read_map(argv[1]);
+	int line = ft_get_l_number(argv[1]);
+	int i = 0;
+	while (i < line)
 	{
-		ret = ft_verify_columns(argv[1]);
-		printf("%i", ft_get_c_number(argv[1]));
+		printf("%s\n", map[i]);
 		i++;
 	}
-	return (ret);
 }
