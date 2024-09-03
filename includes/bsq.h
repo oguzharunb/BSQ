@@ -15,6 +15,8 @@
 # define ERR_NO_FILE 256
 # define ERR_READ 512
 
+typedef unsigned short	t_us;
+typedef unsigned int 	t_ui;
 typedef struct s_map_data
 {
 	char	empty;
@@ -35,9 +37,9 @@ int		ft_get_to_next_l(int fd);
 void	ft_cursor_to_next_line(int fd);
 int		ft_get_next_columns(int fd);
 void	ft_putstr(char *str);
-int		ft_size_file(char *file_name);
-int		ft_get_l_number(char *file_name);
-int		ft_get_c_number(char *file_name);
+t_ui	ft_size_file(char *file_name);
+t_us	ft_get_l_number(char *file_name);
+t_us	ft_get_c_number(char *file_name);
 char	ft_get_obstacle(char *file_name);
 char	ft_get_void(char *file_name);
 char	ft_get_full(char *file_name);
@@ -46,8 +48,10 @@ int		ft_verify_columns(char *argv);
 int		ft_verify_map(char *argv);
 char	**ft_create_map(int row, int col);
 char	**ft_read_map(char *argv);
-t_bsq	ft_find_bsq_in_matrix(int **matrix, int c, int l);
-int		**ft_find_solution(char **map, int l, int c, char obst);
-int		ft_min(int a, int b, int c);
+void	ft_putchar(char c);
+t_bsq	ft_find_bsq_in_matrix(t_us **matrix, t_us c, t_us l);
+void	ft_putnbr(int nb);
+t_us	**ft_solve(char **map, t_us l, t_us c, char obst);
+t_us	ft_min(t_us a, t_us b, t_us c);
 
 #endif
