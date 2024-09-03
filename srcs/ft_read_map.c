@@ -1,7 +1,7 @@
 #include "../includes/bsq.h"
 
 //This function will give us size of file.
-int	ft_size_file(char *file_name)
+t_ui	ft_size_file(char *file_name)
 {
 	int		size;
 	char	buf;
@@ -16,12 +16,12 @@ int	ft_size_file(char *file_name)
 }
 
 //this file is for getting data of the file like chars, size, line number
-int	ft_get_l_number(char *file_name)//bro
+t_us	ft_get_l_number(char *file_name)//bro
 {
-	char	buf;
-	int		i;
-	int		fd;
-	int		result;
+	char			buf;
+	t_us			i;
+	t_us			fd;
+	t_us			result;
 
 	result = 0;
 	i = 0;
@@ -37,12 +37,12 @@ int	ft_get_l_number(char *file_name)//bro
 	return (result);
 }
 
-int	ft_get_c_number(char *file_name)
+t_us	ft_get_c_number(char *file_name)
 {
-	char	*buf;
-	int		j;
-	int		size_file;
-	int		fd;
+	char			*buf;
+	t_us			j;
+	t_ui			size_file;
+	t_us			fd;
 
 	j = 0;
 	fd = open(file_name, O_RDONLY);
@@ -89,6 +89,7 @@ char	**ft_read_map(char *file_name)
 	int		col;
 	int		row;
 
+	write(1,"reading started", 16);
 	i = 0;
 	row = ft_get_l_number(file_name);
 	col = ft_get_c_number(file_name);
@@ -102,6 +103,7 @@ char	**ft_read_map(char *file_name)
 		buff[i][col - 1] = '\0';
 		i++;
 	}
+	write(1,"reading finished", 17);
 	close (file);
 	return (buff);
 }

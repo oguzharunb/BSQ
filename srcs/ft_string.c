@@ -10,9 +10,14 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
 char	*ft_strcpy(char *dest, char *src)
 {
-  int i;
+	int	i;
 
 	i = 0;
 	while (src[i])
