@@ -1,0 +1,1 @@
+int	ft_draw_out_bsq(char **map, int col, int row);
