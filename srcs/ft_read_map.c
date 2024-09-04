@@ -1,106 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_read_map.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: obastug <obastug@42kocaeli.com.tr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/04 19:50:16 by obastug           #+#    #+#             */
+/*   Updated: 2024/09/04 19:55:16 by obastug          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/bsq.h"
 
-//This function will give us size of file.
-int	ft_size_file(char *file_name)
+t_bool	ft_reader(t_data *d, int fd, long buffer_size, long size)
 {
-	int		size;
-	char	buf;
-	int		fd;
+	char	*buffer;
+	long	ret;
 
-	size = 0;
-	fd = open(file_name, O_RDONLY);
-	while (read(fd, &buf, 1))
-		size++;
-	close(fd);
-	return (size);
-}
-
-//this file is for getting data of the file like chars, size, line number
-int	ft_get_l_number(char *file_name)//bro
-{
-	char	buf;
-	int		i;
-	int		fd;
-	int		result;
-
-	result = 0;
-	i = 0;
-	fd = open(file_name, O_RDONLY);
-	while (read(fd, &buf, 1))
+	buffer = (char *)malloc(sizeof(char) * buffer_size + 1);
+	if (!buffer)
+		return (ft_err_message("Memory allocation failed\n"));
+	ret = read(fd, buffer, buffer_size);
+	buffer[ret] = '\0';
+	while (ret != 0 && ret != -1)
 	{
-		if (buf < '0' || buf > '9')
-			break ;
-		result = (result * 10) + (buf - '0');
-		i++;
+		d->raw_map = ft_strsjoin(d->raw_map, size, buffer, buffer_size);
+		if (!d->raw_map)
+			return (ft_err_message("Memory allocation failed\n"));
+		size += ret;
+		ret = read(fd, buffer, buffer_size);
+		buffer[ret] = '\0';
 	}
-	close(fd);
-	return (result);
+	free(buffer);
+	return (1);
 }
 
-int	ft_get_c_number(char *file_name)
+t_bool	ft_read_map(t_data *d, int fd, long buffer_size)
 {
-	char	*buf;
-	int		j;
-	int		size_file;
-	int		fd;
+	long	ret;
 
-	j = 0;
-	fd = open(file_name, O_RDONLY);
-	size_file = ft_size_file(file_name);
-	ft_cursor_to_next_line(fd);
-	buf = malloc(size_file * sizeof(char));
-	if (buf == NULL)
+	d->raw_map = (char *)malloc(sizeof(char) * (buffer_size + 1));
+	if (!d->raw_map)
+		return (ft_err_message("Memory allocation failed\n"));
+	ret = read(fd, d->raw_map, buffer_size);
+	d->raw_map[ret] = '\0';
+	if (ret != 0 && ret != -1)
+		if (!ft_reader(d, fd, buffer_size, ret))
+			return (0);
+	return (1);
+}
+
+t_bool	ft_read_stdin(t_data *d)
+{
+	if (!ft_read_map(d, STDIN_FILENO, BUFFER_STDIN))
 		return (0);
-	while (read(fd, &buf[j], 1))
-	{
-		if (buf[j] == '\n')
-			break ;
-		j++;
-	}
-	free (buf);
-	close(fd);
-	return (j + 1);
+	if (!ft_fill_map_data(d) || !ft_read_col(d))
+		return (0);
+	return (1);
 }
 
-char	**ft_create_map(char **buff, int row, int col)
+t_bool	ft_read_file(t_data *d, char *file)
 {
-	int	i;
-
-	buff = malloc(row * sizeof(char *));
-	if (!buff)
-		return (NULL);
-	i = 0;
-	while (i < row)
+	d->fd = open(file, O_RDONLY);
+	if (d->fd < 0)
+		return (ft_err_message("File reading failed\n"));
+	if (!ft_read_map(d, d->fd, BUFFER_SIZE))
 	{
-		buff[i] = malloc(col * sizeof(char));
-		if (!buff[i])
-			return (NULL);
-		i++;
+		close(d->fd);
+		return (0);
 	}
-	return (buff);
-}
-
-char	**ft_read_map(char *file_name)
-{
-	char	**buff;
-	int		i;
-	int		file;
-	int		col;
-	int		row;
-
-	i = 0;
-	row = ft_get_l_number(file_name);
-	col = ft_get_c_number(file_name);
-	file = open(file_name, O_RDONLY);
-	ft_cursor_to_next_line(file);
-	buff = ft_create_map(buff, row, col);
-	while (i < row)
-	{
-		if (read(file, buff[i], col) == -1)
-			return (NULL);
-		buff[i][col - 1] = '\0';
-		i++;
-	}
-	close (file);
-	return (buff);
+	if (!ft_fill_map_data(d) || !ft_read_col(d))
+		return (0);
+	close(d->fd);
+	return (1);
 }
