@@ -62,4 +62,4 @@ To run the program with one or more map files, use the following command:
 ..o.......o................
 ```
 
-intra: obastug w/yusudemi
+intra: obastug w/yusudemi.
